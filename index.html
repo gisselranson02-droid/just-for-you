@@ -103,18 +103,20 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     function startExperience() {
-      document.getElementById('page-1').style.display = 'none';
-      document.getElementById('page-2').style.display = 'flex';
-      document.getElementById('page-3').style.display = 'none';
-      
-      try {
-        var song = document.getElementById('bday-song');
-        if (song) { 
-          song.volume = 0.30; 
-          song.play().catch(function(err) { console.log("Audio blocked:", err); }); 
-        }
-      } catch (e) {}
-    }
+  var song = document.getElementById('bday-song');
+  if (song) {
+    song.volume = 0.50;
+    song.currentTime = 0;
+    song.play().catch(function(err) {
+      console.log("Audio blocked:", err);
+    });
+  }
+
+  document.getElementById('page-1').style.display = 'none';
+  document.getElementById('page-2').style.display = 'flex';
+  document.getElementById('page-3').style.display = 'none';
+}
+    
 
     // Birthday wish message for Daddy Joe
     const wishMessage = `Holy crap! You're getting older, yet you still look so young and handsome just like the clear blue skies 🩵.<br><br>Somehow, even your little lip expressions have become one of the things I find ridiculously adorable about you 😂. <br><br>Ever since I met you, you've been a mentor , a true friend  and one of the sweetest people I've ever known . On your special day, my prayer is that the universe blesses you with good health , happiness , peace of mind and many more wonderful years filled with love and joy .<br><br>Happy Birthday, Daddy Joe! 🎉🎂 You're truly one of a kind 💎 and I'm so grateful to know you . Wishing you the very best today and always! 🥂🎁🎈`;

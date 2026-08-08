@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>It's Leo season ❤️</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- BACKGROUND MUSIC -->
+  <audio id="bday-song" src="la_isla_bonita.mp3" loop></audio>
+
+  <!-- PAGE 1: HERO COVER (MIDNIGHT GOLD STARLIGHT) -->
+  <div id="page-1" class="hero-page">
+    <div class="hero-content">
+      <p class="subtitle-text">IT'S LEO SEASON! CHEERS 🎈</p>
+      <h1 class="main-title">Daddy Joe</h1>
+      <button type="button" class="open-btn" onclick="startExperience()">Click Open</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2: ENVELOPE CARD WITH BALLOONS, CAKES & STARS -->
+  <div id="page-2" class="envelope-page" style="display: none;">
+    
+    <!-- FLOATING ANIMATION CONTAINER -->
+    <div class="float-container">
+      <!-- Balloons -->
+      <div class="float-item b1">🎈</div>
+      <div class="float-item b2">🎈</div>
+      <div class="float-item b3">🎈</div>
+      <div class="float-item b4">🎈</div>
+      <!-- Birthday Cakes -->
+      <div class="float-item c1">🎂</div>
+      <div class="float-item c2">🍰</div>
+      <div class="float-item c3">🎂</div>
+      <!-- Sparkling Stars -->
+      <div class="float-item s1">✨</div>
+      <div class="float-item s2">⭐</div>
+      <div class="float-item s3">🌟</div>
+      <div class="float-item s4">✨</div>
+      <div class="float-item s5">⭐</div>
+    </div>
+
+    <div class="envelope-card">
+      <div class="card-inner">
+        <p class="event-date">11 AUGUST 2026</p>
+        <p class="event-time">12:00 AM</p>
+        <button id="open-wish-btn" type="button" class="open-btn dark" onclick="revealWish()">Click Open</button>
+
+        <!-- WISH CONTENT INSIDE ENVELOPE (TYPING EFFECT) -->
+        <div id="wish-container" class="wish-container" style="display: none;">
+          <h2 class="wish-heading">My Birthday Wish For You 💌</h2>
+          
+          <!-- Animated typing text container -->
+          <p id="typed-text" class="wish-text"></p>
+
+          <div class="button-group">
+            <button id="memories-btn" type="button" class="next-btn" style="display: none;" onclick="goToPage3()">Continue to Memories ✨</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: MEMORIES SECTION WITH SPARKLE SURPRISE REVEAL -->
+  <div id="page-3" class="memories-page" style="display: none;">
+    <header class="header">
+      <h1 class="page3-title">Memories 📸</h1>
+      <p class="memories-subtitle">Let's make more memories ✨</p>
+    </header>
+
+    <div id="gallery-section" class="gallery-section">
+      <div class="gallery-grid">
+        <!-- Photo 1 Container -->
+        <div id="card-1" class="photo-card horizontal-frame photo-hidden">
+          <span class="sparkle-burst">✨</span>
+          <img src="photo1.jpeg" alt="Daddy Joe Photo 1">
+        </div>
+        
+        <!-- Photo 2 Container -->
+        <div id="card-2" class="photo-card horizontal-frame photo-hidden">
+          <span class="sparkle-burst">✨</span>
+          <img src="photo2.jpeg" alt="Daddy Joe Photo 2">
+        </div>
+
+        <!-- Photo 3 Container -->
+        <div id="card-3" class="photo-card horizontal-frame photo-hidden">
+          <span class="sparkle-burst">✨</span>
+          <img src="photo3.jpeg" alt="Daddy Joe Photo 3">
+        </div>
+      </div>
+    </div>
+
+    <!-- REPLAY & BACK NAVIGATION BUTTONS -->
+    <div id="nav-controls" class="nav-controls" style="display: none;">
+      <button type="button" class="restart-btn" onclick="restartExperience()">Replay Surprise 🔄</button>
+      <button type="button" class="back-btn" onclick="goToPage2()">Back to Wish 💌</button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function startExperience() {
+      document.getElementById('page-1').style.display = 'none';
+      document.getElementById('page-2').style.display = 'flex';
+      document.getElementById('page-3').style.display = 'none';
+      
+      try {
+        var song = document.getElementById('bday-song');
+        if (song) { 
+          song.volume = 0.30; 
+          song.play().catch(function(err) { console.log("Audio blocked:", err); }); 
+        }
+      } catch (e) {}
+    }
+
+    // Birthday wish message for Daddy Joe
+    const wishMessage = `Holy crap! You're getting older, yet you still look so young and handsome just like the clear blue skies 🩵.<br><br>Somehow, even your little lip expressions have become one of the things I find ridiculously adorable about you 😂. <br><br>Ever since I met you, you've been a mentor , a true friend  and one of the sweetest people I've ever known . On your special day, my prayer is that the universe blesses you with good health , happiness , peace of mind and many more wonderful years filled with love and joy .<br><br>Happy Birthday, Daddy Joe! 🎉🎂 You're truly one of a kind 💎 and I'm so grateful to know you . Wishing you the very best today and always! 🥂🎁🎈`;
+
+    let charIndex = 0;
+    const typingSpeed = 65;
+    let isTyping = false;
+
+    function revealWish() {
+      document.getElementById('open-wish-btn').style.display = 'none';
+      document.getElementById('wish-container').style.display = 'block';
+      if (!isTyping && charIndex < wishMessage.length) {
+        typeMessage();
+      }
+    }
+
+    function typeMessage() {
+      isTyping = true;
+      const container = document.getElementById('typed-text');
+      
+      if (charIndex < wishMessage.length) {
+        if (wishMessage.substring(charIndex, charIndex + 4) === "<br>") {
+          container.innerHTML += "<br>";
+          charIndex += 4;
+        } else {
+          container.innerHTML += wishMessage.charAt(charIndex);
+          charIndex++;
+        }
+        setTimeout(typeMessage, typingSpeed);
+      } else {
+        isTyping = false;
+        document.getElementById('memories-btn').style.display = 'block';
+      }
+    }
+
+    let photoTimers = [];
+
+    // SEQUENTIAL PHOTO SURPRISE LOGIC WITH DELAYS
+    function goToPage3() {
+      document.getElementById('page-2').style.display = 'none';
+      document.getElementById('page-3').style.display = 'block';
+      document.getElementById('nav-controls').style.display = 'none';
+
+      // Reset photo visibility
+      resetPhotos();
+
+      // Clear any pending timers
+      photoTimers.forEach(timer => clearTimeout(timer));
+      photoTimers = [];
+
+      // 1. Photo 1 pops up after 0.5s
+      photoTimers.push(setTimeout(() => {
+        document.getElementById('card-1').classList.remove('photo-hidden');
+        document.getElementById('card-1').classList.add('sparkle-pop');
+      }, 500));
+
+      // 2. Photo 2 pops up 2.5s later (3.0s total)
+      photoTimers.push(setTimeout(() => {
+        document.getElementById('card-2').classList.remove('photo-hidden');
+        document.getElementById('card-2').classList.add('sparkle-pop');
+      }, 3000));
+
+      // 3. Photo 3 pops up another 2.5s later (5.5s total)
+      photoTimers.push(setTimeout(() => {
+        document.getElementById('card-3').classList.remove('photo-hidden');
+        document.getElementById('card-3').classList.add('sparkle-pop');
+        
+        // Reveal navigation buttons after all photos appear
+        document.getElementById('nav-controls').style.display = 'flex';
+      }, 5500));
+    }
+
+    function resetPhotos() {
+      for (let i = 1; i <= 3; i++) {
+        const card = document.getElementById(`card-${i}`);
+        card.classList.remove('sparkle-pop');
+        card.classList.add('photo-hidden');
+      }
+    }
+
+    function goToPage2() {
+      document.getElementById('page-3').style.display = 'none';
+      document.getElementById('page-2').style.display = 'flex';
+    }
+
+    function restartExperience() {
+      // Clear timers and reset state
+      photoTimers.forEach(timer => clearTimeout(timer));
+      photoTimers = [];
+      resetPhotos();
+
+      // Reset typing
+      charIndex = 0;
+      isTyping = false;
+      document.getElementById('typed-text').innerHTML = '';
+      document.getElementById('open-wish-btn').style.display = 'block';
+      document.getElementById('wish-container').style.display = 'none';
+      document.getElementById('memories-btn').style.display = 'none';
+
+      // Return to cover page
+      document.getElementById('page-3').style.display = 'none';
+      document.getElementById('page-2').style.display = 'none';
+      document.getElementById('page-1').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
